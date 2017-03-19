@@ -1,5 +1,7 @@
 import uuid from 'uuid'
 
+const DEFAULT_TRANSFORM = 'translate(-50%, -50%)'
+
 export default class RigidBody {
     constructor(scene, options = {}) {
         this._id = uuid.v4()
@@ -49,6 +51,6 @@ export default class RigidBody {
             return
         }
 
-        this.node.style.transform = `translate(${this.x}px, ${this.y}px)`
+        this.node.style.transform = `${DEFAULT_TRANSFORM} translate(${this.x}px, ${this.y}px)`
     }
 }
