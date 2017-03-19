@@ -17,5 +17,6 @@ export default class Missile extends RigidBody {
         scene.node.appendChild(node)
 
         this.node = node
+        this.hitRadius = 10
     }
 }

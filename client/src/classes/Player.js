@@ -334,7 +334,8 @@ const style = `
 }
 `
 
-const DEFAULT_TRANSFORM = 'scale(0.5) rotateX(270deg) rotateY(270deg) rotateZ(-35deg)'
+const DEFAULT_ROOT_TRANSFORM = 'translate(-50%, -50%)'
+const DEFAULT_SCENE_TRANSFORM = 'scale(0.5) rotateX(270deg) rotateY(270deg) rotateZ(-35deg)'
 
 export default class Player extends RigidBody {
     constructor(scene, options = {}) {
@@ -352,15 +353,17 @@ export default class Player extends RigidBody {
         node.style.zIndex = '75'
         node.style.height = '250px'
         node.style.width = '250px'
-        node.querySelector('.scene').style.transform = DEFAULT_TRANSFORM
+        node.style.transform = DEFAULT_ROOT_TRANSFORM
+        node.querySelector('.scene').style.transform = DEFAULT_SCENE_TRANSFORM
         scene.node.appendChild(node)
         this.node = node
 
         // Init position
         const sceneBounds = this.scene.node.getBoundingClientRect()
         const nodeBounds = this.node.getBoundingClientRect()
-        this.x = (sceneBounds.width / 2) - (nodeBounds.width / 2)
+        this.x = sceneBounds.width / 2
         this.y = sceneBounds.height - nodeBounds.height
+        this.hitRadius = 50
     }
 
     setVelocity(bearing, speed) {
@@ -382,7 +385,7 @@ export default class Player extends RigidBody {
         this.node
             .querySelector('.scene')
             .style
-            .transform = `${DEFAULT_TRANSFORM} rotateZ(${pitch}deg) rotateX(${roll}deg)`
+            .transform = `${DEFAULT_SCENE_TRANSFORM} rotateZ(${pitch}deg) rotateX(${roll}deg)`
     }
 
     fireMissile() {
@@ -411,11 +414,11 @@ export default class Player extends RigidBody {
         if (!(this.node instanceof Node)) return
 
         const bounds = this.scene.node.getBoundingClientRect()
-        const nodeRect = this.node.getBoundingClientRect()
-        const inBounds = this.x + (nodeRect.width / 2) <= bounds.width &&
-                        this.y + nodeRect.height <= bounds.height &&
-                        this.x + (nodeRect.width / 2) >= 0 &&
-                        this.y >= 0
+        // const nodeRect = this.node.getBoundingClientRect()
+        const inBounds = this.x <= bounds.width &&
+                        this.y + this.hitRadius <= bounds.height &&
+                        this.x >= 0 &&
+                        this.y - this.hitRadius >= 0
 
         if (!inBounds) {
             this.x = prevX
@@ -423,6 +426,6 @@ export default class Player extends RigidBody {
             return
         }
 
-        this.node.style.transform = `translate(${this.x}px, ${this.y}px)`
+        this.node.style.transform = `${DEFAULT_ROOT_TRANSFORM} translate(${this.x}px, ${this.y}px)`
     }
 }

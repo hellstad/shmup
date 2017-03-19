@@ -29,6 +29,7 @@ export default class EnemyA extends RigidBody {
         const sceneBounds = scene.node.getBoundingClientRect()
         const nodeBounds = this.node.getBoundingClientRect()
         this.x = Math.random() * (sceneBounds.width - (nodeBounds.width * 2))
+        this.hitRadius = 25
 
         this.setVelocity(180, 100)
         this.state = STATE_INITIAL
@@ -51,16 +52,17 @@ export default class EnemyA extends RigidBody {
 
         const nodeBounds = this.node.getBoundingClientRect()
         for (let i = 0; i < this.scene.objects.length; i++) {
-            const objectBounds = this.scene.objects[i].node.getBoundingClientRect()
-            if (nodeBounds.left < objectBounds.left + objectBounds.width &&
-                nodeBounds.left + nodeBounds.width > objectBounds.left &&
-                nodeBounds.top < objectBounds.top + objectBounds.height &&
-                nodeBounds.height + nodeBounds.top > objectBounds.top) {
-                if (this.scene.objects[i] instanceof PlayerMissile) {
+            const obj = this.scene.objects[i]
+            const objectBounds = obj.node.getBoundingClientRect()
+            const dx = (nodeBounds.left + (nodeBounds.width / 2)) - (objectBounds.left + (objectBounds.width / 2))
+            const dy = (nodeBounds.top + (nodeBounds.height / 2)) - (objectBounds.top + (objectBounds.height / 2))
+            const distance = Math.sqrt((dx ** 2) + (dy ** 2))
+            if (distance < this.hitRadius + obj.hitRadius) {
+                if (obj instanceof PlayerMissile) {
                     this.die()
-                    this.scene.objects[i].die()
+                    obj.die()
                     break
-                } else if (this.scene.objects[i] instanceof Player) {
+                } else if (obj instanceof Player) {
                     this.die()
                     break
                 }

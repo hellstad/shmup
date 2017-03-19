@@ -10,6 +10,7 @@ export default class RigidBody {
         this.y = options.y || 0
         this.bearing = typeof options.bearing === 'number' ? options.bearing : Math.PI
         this.speed = options.speed || 0
+        this.hitRadius = 10
 
         // Add to scene
         this.scene.objects.push(this)
