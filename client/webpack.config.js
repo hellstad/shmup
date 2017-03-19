@@ -70,8 +70,7 @@ module.exports = {
     devtool: isProd ? 'source-map' : 'eval',
     context: sourcePath,
     entry: {
-        js: './index.js',
-        vendor: []
+        js: './index.js'
     },
     output: {
         path: buildPath,
