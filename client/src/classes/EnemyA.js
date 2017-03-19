@@ -6,8 +6,10 @@ export default class EnemyA extends RigidBody {
 
         const node = document.createElement('div')
         node.className = '__enemy_a__'
-        node.style.zIndex = '100'
+        node.style.zIndex = '90'
         node.style.position = 'absolute'
+        node.style.top = '0px'
+        node.style.left = '0px'
         node.style.height = '50px'
         node.style.width = '50px'
         node.style.backgroundColor = 'blue'
