@@ -380,4 +380,34 @@ export default class Player extends RigidBody {
             .style
             .transform = `${DEFAULT_TRANSFORM} rotateZ(${pitch}deg) rotateX(${roll}deg)`
     }
+
+    // @Override
+    render() {
+        const now = Date.now()
+        const frameDeltaMs = now - this.lastRender
+        this.lastRender = now
+
+        const distanceDelta = (this.speed * frameDeltaMs) / 1000
+        const prevX = this.x
+        const prevY = this.y
+        this.x = this.x + (Math.sin(this.bearing) * distanceDelta)
+        this.y = this.y - (Math.cos(this.bearing) * distanceDelta)
+
+        if (!(this.node instanceof Node)) return
+
+        const bounds = this.scene.getBoundingClientRect()
+        const nodeRect = this.node.getBoundingClientRect()
+        const inBounds = this.x + nodeRect.width <= bounds.width &&
+                        this.y + nodeRect.height <= bounds.height &&
+                        this.x >= 0 &&
+                        this.y >= 0
+
+        if (!inBounds) {
+            this.x = prevX
+            this.y = prevY
+            return
+        }
+
+        this.node.style.transform = `translate(${this.x}px, ${this.y}px)`
+    }
 }
