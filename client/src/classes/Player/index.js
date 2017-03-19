@@ -372,6 +372,8 @@ export default class Player extends RigidBody {
         let pitch = 0
         if (vBearing > 90 && vBearing < 270) {
             pitch = 15
+        } else if ((vBearing < 90 || vBearing > 270) && speed !== 0) {
+            pitch = -10
         }
         this.node
             .querySelector('.scene')
