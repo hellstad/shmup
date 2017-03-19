@@ -1,21 +1,15 @@
 import './styles/index.scss'
 import './index.html'
 
+import SceneManager from './classes/SceneManager'
 import Player from './classes/Player'
-import Missile from './classes/Missile'
 
 document.addEventListener('DOMContentLoaded', () => {
-    const scene = document.getElementById('root')
-
-    const missile = new Missile(scene, {
-        x: 0,
-        y: 0,
-        speed: 200
-    })
-    missile.setBearing(135)
+    const sceneNode = document.getElementById('root')
+    const sceneManager = new SceneManager(sceneNode)
 
     const PLAYER_MOVEMENT_SPEED = 500
-    const player = new Player(scene, {
+    const player = new Player(sceneManager, {
         x: 0,
         y: 0,
         speed: 0
@@ -98,6 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'KeyA':
                 controlState.left = false
                 break
+            case 'Space':
+                player.fireMissile()
+                break
             default:
         }
 
@@ -105,8 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     function step() {
-        player.render()
-        missile.render()
+        sceneManager.render()
         requestAnimationFrame(step)
     }
     requestAnimationFrame(step)

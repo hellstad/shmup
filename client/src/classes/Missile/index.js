@@ -14,7 +14,7 @@ export default class Missile extends RigidBody {
         node.style.border = '5px solid red'
         node.style.borderRadius = '20px'
         node.style.transition = 'transform'
-        scene.appendChild(node)
+        scene.node.appendChild(node)
 
         this.node = node
     }
