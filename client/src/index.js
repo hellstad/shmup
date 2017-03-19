@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const PLAYER_MOVEMENT_SPEED = 500
     const player = new Player(scene, {
-        x: 150,
-        y: 150,
+        x: 0,
+        y: 0,
         speed: 0
     })
 

@@ -333,30 +333,30 @@ const style = `
 }
 `
 
-const DEFAULT_TRANSFORM = 'scale(0.5) rotateX(270deg) rotateY(270deg) rotateZ(-50deg)'
+const DEFAULT_TRANSFORM = 'scale(0.5) rotateX(270deg) rotateY(270deg) rotateZ(-35deg)'
 
 export default class Player extends RigidBody {
     constructor(scene, options = {}) {
         super(scene, options)
 
+        // Setup DOM stuff
         const styleNode = document.createElement('style')
         styleNode.textContent = style
         document.head.appendChild(styleNode)
 
         const node = document.createElement('div')
         node.innerHTML = template
-        // node.className = '__player__'
-        // node.style.position = 'absolute'
         node.style.height = '250px'
         node.style.width = '250px'
-        // node.style.backgroundColor = 'grey'
-        // node.style.border = '10px solid black'
-        // node.style.borderRadius = '50px'
-        // node.style.transition = 'transform'
         node.querySelector('.scene').style.transform = DEFAULT_TRANSFORM
         scene.appendChild(node)
-
         this.node = node
+
+        // Init position
+        const sceneBounds = this.scene.getBoundingClientRect()
+        const nodeBounds = this.node.getBoundingClientRect()
+        this.x = (sceneBounds.width / 2) - (nodeBounds.width / 2)
+        this.y = sceneBounds.height - nodeBounds.height
     }
 
     setVelocity(bearing, speed) {
@@ -377,6 +377,7 @@ export default class Player extends RigidBody {
         }
         this.node
             .querySelector('.scene')
-            .style.transform = `${DEFAULT_TRANSFORM} rotateZ(${pitch}deg) rotateX(${roll}deg)`
+            .style
+            .transform = `${DEFAULT_TRANSFORM} rotateZ(${pitch}deg) rotateX(${roll}deg)`
     }
 }
