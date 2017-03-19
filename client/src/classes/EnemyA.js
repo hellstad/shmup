@@ -56,7 +56,7 @@ export default class EnemyA extends RigidBody {
             const objectBounds = obj.node.getBoundingClientRect()
             const dx = (nodeBounds.left + (nodeBounds.width / 2)) - (objectBounds.left + (objectBounds.width / 2))
             const dy = (nodeBounds.top + (nodeBounds.height / 2)) - (objectBounds.top + (objectBounds.height / 2))
-            const distance = Math.sqrt((dx ** 2) + (dy ** 2))
+            const distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
             if (distance < this.hitRadius + obj.hitRadius) {
                 if (obj instanceof PlayerMissile) {
                     this.die()
