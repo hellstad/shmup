@@ -39,13 +39,13 @@ export default class EnemyA extends RigidBody {
         const now = Date.now()
         this.lastStateChange = this.lastStateChange || now
         if (this.state === STATE_INITIAL &&
-            now - this.lastStateChange > 2000) {
-            this.setVelocity(180, 200)
+            now - this.lastStateChange > 1000) {
+            this.setVelocity(180, 300)
             this.state = STATE_HOVERING
             this.lastStateChange = now
         } else if (this.state === STATE_HOVERING &&
-            now - this.lastStateChange > 4000) {
-            this.setVelocity(180, 1500)
+            now - this.lastStateChange > 2000) {
+            this.setVelocity(180, 1200)
             this.state = STATE_ACCELERATING
             this.lastStateChange = now
         }

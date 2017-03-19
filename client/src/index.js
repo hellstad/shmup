@@ -102,11 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePlayerVelocity()
     })
 
-    let lastEnemyRender = Date.now()
+    let lastEnemyRender = 0
     function step() {
         const now = Date.now()
 
-        if (now - lastEnemyRender > 3500) {
+        if (now - lastEnemyRender > 2000) {
             lastEnemyRender = now
             const enemy = new EnemyA(sceneManager)
         }

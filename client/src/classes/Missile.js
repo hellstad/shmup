@@ -8,8 +8,8 @@ export default class Missile extends RigidBody {
         node.className = '__missile__'
         node.style.zIndex = '100'
         node.style.position = 'absolute'
-        node.style.height = '20px'
-        node.style.width = '20px'
+        node.style.height = '30px'
+        node.style.width = '30px'
         node.style.backgroundColor = 'orange'
         node.style.border = '5px solid red'
         node.style.borderRadius = '20px'
@@ -17,6 +17,6 @@ export default class Missile extends RigidBody {
         scene.node.appendChild(node)
 
         this.node = node
-        this.hitRadius = 10
+        this.hitRadius = 15
     }
 }
