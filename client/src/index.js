@@ -102,12 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePlayerVelocity()
     })
 
-    setInterval(() => {
-        const enemy = new EnemyA(sceneManager)
-        enemy.setVelocity(180, 300)
-    }, 5000)
-
+    let lastEnemyRender = Date.now()
     function step() {
+        const now = Date.now()
+
+        if (now - lastEnemyRender > 3500) {
+            lastEnemyRender = now
+            const enemy = new EnemyA(sceneManager)
+        }
+
         sceneManager.render()
         requestAnimationFrame(step)
     }

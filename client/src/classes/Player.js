@@ -1,5 +1,5 @@
 import RigidBody from './RigidBody'
-import Missile from './Missile'
+import PlayerMissile from './PlayerMissile'
 
 const template = `
 <div class="__player__">
@@ -349,6 +349,7 @@ export default class Player extends RigidBody {
 
         const node = document.createElement('div')
         node.innerHTML = template
+        node.style.zIndex = '75'
         node.style.height = '250px'
         node.style.width = '250px'
         node.querySelector('.scene').style.transform = DEFAULT_TRANSFORM
@@ -386,7 +387,7 @@ export default class Player extends RigidBody {
 
     fireMissile() {
         const nodeRect = this.node.getBoundingClientRect()
-        const missile = new Missile(this.scene, {
+        const missile = new PlayerMissile(this.scene, {
             x: nodeRect.left + (nodeRect.width / 2),
             y: nodeRect.top - nodeRect.height,
             speed: 500

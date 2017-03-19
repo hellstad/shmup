@@ -28,7 +28,20 @@ export default class RigidBody {
         this.setBearing(bearing)
     }
 
+    die() {
+        this.scene.objects = this.scene.objects.filter(o => {
+            if (o._id === this._id) {
+                o.node.remove()
+                return false
+            }
+
+            return true
+        })
+    }
+
     render() {
+        if (typeof this.prerender === 'function') this.prerender()
+
         const now = Date.now()
         const frameDeltaMs = now - (this.lastRender || now)
         this.lastRender = now
@@ -51,17 +64,12 @@ export default class RigidBody {
         if (!inBounds) {
             this.x = prevX
             this.y = prevY
-            this.scene.objects = this.scene.objects.filter(o => {
-                if (o._id === this._id) {
-                    o.node.remove()
-                    return false
-                }
-
-                return true
-            })
+            this.die()
             return
         }
 
         this.node.style.transform = `${DEFAULT_TRANSFORM} translate(${this.x}px, ${this.y}px)`
+
+        if (typeof this.postrender === 'function') this.postrender()
     }
 }
