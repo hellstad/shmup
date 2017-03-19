@@ -5,7 +5,6 @@ const DEFAULT_TRANSFORM = 'translate(-50%, -50%)'
 export default class RigidBody {
     constructor(scene, options = {}) {
         this._id = uuid.v4()
-        this.lastRender = Date.now()
         this.scene = scene
         this.x = options.x || 0
         this.y = options.y || 0
@@ -24,9 +23,14 @@ export default class RigidBody {
         this.speed = speed
     }
 
+    setVelocity(bearing, speed) {
+        this.setSpeed(speed)
+        this.setBearing(bearing)
+    }
+
     render() {
         const now = Date.now()
-        const frameDeltaMs = now - this.lastRender
+        const frameDeltaMs = now - (this.lastRender || now)
         this.lastRender = now
 
         const distanceDelta = (this.speed * frameDeltaMs) / 1000
@@ -47,7 +51,14 @@ export default class RigidBody {
         if (!inBounds) {
             this.x = prevX
             this.y = prevY
-            this.scene.objects = this.scene.objects.filter(o => o._id !== this._id)
+            this.scene.objects = this.scene.objects.filter(o => {
+                if (o._id === this._id) {
+                    o.node.remove()
+                    return false
+                }
+
+                return true
+            })
             return
         }
 

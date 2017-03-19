@@ -1,4 +1,4 @@
-import RigidBody from '../RigidBody'
+import RigidBody from './RigidBody'
 
 export default class Missile extends RigidBody {
     constructor(scene, options = {}) {

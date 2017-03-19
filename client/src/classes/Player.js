@@ -1,5 +1,5 @@
-import RigidBody from '../RigidBody'
-import Missile from '../Missile'
+import RigidBody from './RigidBody'
+import Missile from './Missile'
 
 const template = `
 <div class="__player__">
@@ -398,7 +398,7 @@ export default class Player extends RigidBody {
     // @Override
     render() {
         const now = Date.now()
-        const frameDeltaMs = now - this.lastRender
+        const frameDeltaMs = now - (this.lastRender || now)
         this.lastRender = now
 
         const distanceDelta = (this.speed * frameDeltaMs) / 1000

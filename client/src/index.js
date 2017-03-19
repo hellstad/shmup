@@ -3,6 +3,7 @@ import './index.html'
 
 import SceneManager from './classes/SceneManager'
 import Player from './classes/Player'
+import EnemyA from './classes/EnemyA'
 
 document.addEventListener('DOMContentLoaded', () => {
     const sceneNode = document.getElementById('root')
@@ -100,6 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updatePlayerVelocity()
     })
+
+    setInterval(() => {
+        const enemy = new EnemyA(sceneManager)
+        enemy.setVelocity(180, 300)
+    }, 5000)
 
     function step() {
         sceneManager.render()
