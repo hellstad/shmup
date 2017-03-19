@@ -411,9 +411,9 @@ export default class Player extends RigidBody {
 
         const bounds = this.scene.node.getBoundingClientRect()
         const nodeRect = this.node.getBoundingClientRect()
-        const inBounds = this.x + nodeRect.width <= bounds.width &&
+        const inBounds = this.x + (nodeRect.width / 2) <= bounds.width &&
                         this.y + nodeRect.height <= bounds.height &&
-                        this.x >= 0 &&
+                        this.x + (nodeRect.width / 2) >= 0 &&
                         this.y >= 0
 
         if (!inBounds) {
